@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    container_name: virtual-store-backend
+    environment:
+      PORT: 4000
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:4000/api
+    container_name: virtual-store-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
